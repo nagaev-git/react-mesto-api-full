@@ -1,0 +1,17 @@
+.form__error {
+    text-align: left;
+    font-size: 12px;
+    line-height: 1.2;
+    color: #ff0000;
+    max-width: 358px;
+    width: 100%;
+    min-height: 30px;
+    padding-top: 5px;
+}
+
+@media screen and (max-width: 590px) {
+    .form__error {
+        max-width: 238px;
+        font-size: 11px;
+    }
+}

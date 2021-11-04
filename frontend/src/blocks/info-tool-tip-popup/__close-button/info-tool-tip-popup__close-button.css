@@ -1,0 +1,23 @@
+/* .info-tool-tip-popup__close-button {
+    width: 32px;
+    height: 32px;
+    background-color: transparent;
+    background-image: url("../../../images/popup/button_close.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    top: -37px;
+    right: -40px;
+    border: none;
+    padding: 0;
+    opacity: 1;
+    transition: opacity 0.3s linear;
+  }
+  
+  .info-tool-tip-popup__close-button:hover {
+    opacity: 0.6;
+  }
+  
+  .info-tool-tip-popup__close-button:focus {
+    outline: none;
+  } */

@@ -1,0 +1,6 @@
+.image__item {
+    max-height: 75vh;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}

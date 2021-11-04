@@ -1,0 +1,13 @@
+.profile__button {
+    display: flex;
+    align-items: flex-start;
+    max-width: 600px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+@media screen and (max-width: 700px) {
+    .profile__button {
+    display: block;
+    }
+}

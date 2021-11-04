@@ -1,0 +1,27 @@
+.popup__toggle {    
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    right: -40px;
+    top: -40px;
+    padding: 0;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    background-size: cover;
+    background-image: url(../../../images/popup/button_close.svg);
+}
+
+.popup__toggle:hover {
+    opacity: 0.6;
+    transition: 200ms ease-in-out;
+}
+
+@media screen and (max-width: 800px) {
+    .popup__toggle {
+        width: 26px;
+        height: 26px;
+        right: 0;
+        top: -38px;
+    }
+}

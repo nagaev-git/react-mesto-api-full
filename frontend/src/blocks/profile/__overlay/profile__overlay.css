@@ -1,0 +1,35 @@
+.profile__overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.profile__overlay:hover::after {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    content: url(../../../images/profile/avatar_edit.svg);
+    border-radius: 50%;
+    width: 122px;
+    height: 122px;
+    
+    background: rgba(0, 0, 0, 0.8);
+}
+
+@media screen and (max-width: 900px) {
+    .profile__overlay {
+        margin-left: 25px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .profile__overlay {
+        margin-left: 0;
+    }
+}

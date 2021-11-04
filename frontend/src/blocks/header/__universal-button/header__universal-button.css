@@ -1,0 +1,21 @@
+.header__universal-button {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 1.22;
+    text-align: right;
+    color: #ffffff;
+    background-color: #000000;
+    border: none;
+    padding: 0;
+    transition: opacity 0.3s linear;
+  }
+  
+  .header__universal-button:focus {
+    border: 0;
+  }
+  
+  .header__universal-button:hover {
+    opacity: 0.6;
+  }

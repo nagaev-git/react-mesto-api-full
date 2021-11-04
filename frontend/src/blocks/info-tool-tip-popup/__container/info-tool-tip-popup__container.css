@@ -1,0 +1,20 @@
+.info-tool-tip-popup__container {
+  position: relative;
+  background: #ffffff;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  max-width: 430px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 500px) {
+  .info-tool-tip-popup__container {
+    max-width: 280px;
+  }
+}
