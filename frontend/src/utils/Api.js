@@ -1,7 +1,6 @@
 class Api {
-  constructor({ url, headers }) {
+  constructor({ url }) {
     this._url = url;
-    this._headers = headers;
   }
   // обработчик запроса
   _handleResponse(res) {
@@ -14,21 +13,30 @@ class Api {
   getUserInfo() {
     return fetch(`${this._url}/users/me`, {
       method: "GET",
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
     }).then(this._handleResponse);
   }
   // запрос карточек с сервера
   getInitialCards() {
     return fetch(`${this._url}/cards`, {
       method: "GET",
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+      },
     }).then(this._handleResponse);
   }
   // запрос редактирования профиля
   editUserProfile(newUserInfo) {
     return fetch(`${this._url}/users/me`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(newUserInfo),
     }).then(this._handleResponse);
   }
@@ -36,7 +44,10 @@ class Api {
   editUserAvatar(newAvatar) {
     return fetch(`${this._url}/users/me/avatar`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(newAvatar),
     }).then(this._handleResponse);
   }
@@ -44,7 +55,10 @@ class Api {
   addCard(newCard) {
     return fetch(`${this._url}/cards`, {
       method: "POST",
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify(newCard),
     }).then(this._handleResponse);
   }
@@ -53,7 +67,10 @@ class Api {
     return isLiked
       ? fetch(`${this._url}/cards/likes/${cardId}`, {
           method: "DELETE",
-          headers: this._headers,
+          headers: {
+            authorization: `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json'
+          },
         }).then(this._handleResponse)
       : fetch(`${this._url}/cards/likes/${cardId}`, {
           method: "PUT",
@@ -64,17 +81,16 @@ class Api {
   deleteCard(cardId) {
     return fetch(`${this._url}/cards/${cardId}`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json'
+      },
     }).then(this._handleResponse);
   }
 }
 
 const api = new Api({
-  url: "https://mesto.nomoreparties.co/v1/cohort-26",
-  headers: {
-    authorization: "bd92b376-a12a-4ae7-a181-e2ffac2d35f6",
-    "Content-Type": "application/json",
-  },
+  url: "https://mesto.backend.nomoredomains.xyz",
 });
 
 export default api;
