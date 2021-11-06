@@ -15,11 +15,11 @@ const { requestLogger, errorLogger } = require("./middlewares/logger");
 require("dotenv").config();
 
 const allowedCors = [
-  "https://praktikum.tk",
-  "http://praktikum.tk",
-  "http://localhost:3000",
+  "http://mesto.backend.nomoredomains.xyz/",
   "http://mesto.site.nomoredomains.rocks",
+  "https://mesto.backend.nomoredomains.xyz/",
   "https://mesto.site.nomoredomains.rocks",
+  "http://localhost:3000",
 ];
 
 app.use(helmet());
@@ -27,7 +27,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 mongoose.connect("mongodb://localhost:27017/mestodb", {
+  useUnifiedTopology: true,
   useNewUrlParser: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
 });
 
 app.use((req, res, next) => {

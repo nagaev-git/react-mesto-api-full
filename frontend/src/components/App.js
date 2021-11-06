@@ -219,7 +219,7 @@ export default function App() {
     auth
       .register(password, email)
       .then((data) => {
-        if (data.data.email) {
+        if (data.email) {
           setIsSuccessRegister(true);
           setIsRegisterPopupOpen(true);
         }
