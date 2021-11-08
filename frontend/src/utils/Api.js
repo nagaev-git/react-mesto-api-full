@@ -89,8 +89,6 @@ class Api {
   }
 }
 
-const api = new Api({
-  url: "https://mesto.backend.nomoredomains.xyz",
-});
-
-export default api;
+export default new Api({
+  url: 'https://mesto.backend.nomoredomains.xyz',
+})

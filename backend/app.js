@@ -1,26 +1,25 @@
 const express = require("express");
+
+const app = express();
+const { PORT = 3000 } = process.env;
 const mongoose = require("mongoose");
 const { celebrate, Joi, errors } = require("celebrate");
 const helmet = require("helmet");
 const cors = require("cors");
 
-const app = express();
-const { PORT = 3000 } = process.env;
-
-const regExp = require("./regexp/regexp");
 const { login, createUser } = require("./controllers/users");
 const auth = require("./middlewares/auth");
+const regExp = require("./regexp/regexp");
 const errorHandler = require("./middlewares/error");
 const NotFoundError = require("./errors/not-found-err");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 require("dotenv").config();
 
 const allowedCors = [
-  "http://mesto.backend.nomoredomains.xyz/",
-  "http://mesto.site.nomoredomains.rocks",
-  "https://mesto.backend.nomoredomains.xyz/",
-  "https://mesto.site.nomoredomains.rocks",
+  "http://mesto.backend.nomoredomains.xyz",
+  "https://mesto.backend.nomoredomains.xyz",
   "http://localhost:3000",
+  "https://localhost:3000",
 ];
 
 app.use(cors());
@@ -62,30 +61,22 @@ app.get("/crash-test", () => {
   }, 0);
 });
 
-app.post(
-  "/signup",
-  celebrate({
-    body: Joi.object().keys({
-      name: Joi.string().min(2).max(30),
-      about: Joi.string().min(2).max(30),
-      avatar: Joi.string().pattern(regExp),
-      email: Joi.string().email().required(),
-      password: Joi.string().required().min(8).max(35),
-    }),
+app.post("/signup", celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().min(2).max(30),
+    about: Joi.string().min(2).max(30),
+    avatar: Joi.string().pattern(regExp),
+    email: Joi.string().email().required(),
+    password: Joi.string().required().min(8).max(35),
   }),
-  createUser
-);
+}), createUser);
 
-app.post(
-  "/signin",
-  celebrate({
-    body: Joi.object().keys({
-      email: Joi.string().email().required(),
-      password: Joi.string().required(),
-    }),
+app.post("/signin", celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().email().required(),
+    password: Joi.string().required().min(8),
   }),
-  login
-);
+}), login);
 
 app.use(auth);
 
