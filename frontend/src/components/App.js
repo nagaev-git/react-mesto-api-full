@@ -55,17 +55,18 @@ export default function App() {
     return () => document.removeEventListener("keydown", closeByEscape);
   }, []);
 
-  const handleCardLike = (card) => {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+  function handleCardLike(card) {
+
+    const isLiked = card.likes.some((i) => i === currentUser._id);
     api
-      .changeLikeCardStatus(card._id, isLiked)
+      .changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards((state) =>
-          state.map((c) => (c._id === card._id ? newCard : c))
+          state.map((c) => (c._id === card._id ? newCard.data : c))
         );
       })
       .catch((err) => console.log(err));
-  };
+  }
 
   const handleCardDelete = (setButtonStatus) => {
     setButtonStatus("Удаление...");
@@ -118,10 +119,7 @@ export default function App() {
       });
   };
 
-  const handleAddPlaceSubmit = (
-    newCard,
-    setButtonStatus,
-  ) => {
+  const handleAddPlaceSubmit = (newCard, setButtonStatus) => {
     setButtonStatus("Сохранение...");
 
     api
@@ -189,8 +187,8 @@ export default function App() {
       auth
         .checkToken(jwt)
         .then((res) => {
-          if (res.data.email) {
-            setEmail(res.data.email);
+          if (res.email) {
+            setEmail(res.email);
             setLoggedIn(true);
             history.push("/");
           }
@@ -219,7 +217,7 @@ export default function App() {
     auth
       .register(password, email)
       .then((data) => {
-        if (data.data.email) {
+        if (data.email) {
           setIsSuccessRegister(true);
           setIsRegisterPopupOpen(true);
         }
