@@ -1,43 +1,35 @@
 const express = require("express");
-
-const app = express();
-const { PORT = 3000 } = process.env;
 const mongoose = require("mongoose");
+require("dotenv").config();
 const { celebrate, Joi, errors } = require("celebrate");
 const helmet = require("helmet");
-const cors = require("cors");
+const regExp = require("./regexp/regexp");
+const NotFoundError = require("./errors/not-found-err");
+const { requestLogger, errorLogger } = require("./middlewares/logger");
+const corsMiddleware = require("./middlewares/cors-defend");
+
+const app = express();
 
 const { login, createUser } = require("./controllers/users");
 const auth = require("./middlewares/auth");
-const regExp = require("./regexp/regexp");
 const errorHandler = require("./middlewares/error");
-const NotFoundError = require("./errors/not-found-err");
-const { requestLogger, errorLogger } = require("./middlewares/logger");
-require("dotenv").config();
 
-app.use(helmet());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+const { PORT = 3000 } = process.env;
 
 mongoose.connect("mongodb://localhost:27017/mestodb", {
-  useUnifiedTopology: true,
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
+  useUnifiedTopology: true,
 });
 
-app.use(
-  cors({
-    credentials: true,
-    origin: [
-      "http://mesto.site.nomoredomains.rocks",
-      "https://mesto.site.nomoredomains.rocks",
-      "http://localhost:3000",
-    ],
-  })
-);
+app.use(express.json());
+
+app.use(corsMiddleware);
 
 app.use(requestLogger);
+
+app.use(helmet());
 
 app.get("/crash-test", () => {
   setTimeout(() => {
@@ -64,7 +56,7 @@ app.post(
   celebrate({
     body: Joi.object().keys({
       email: Joi.string().email().required(),
-      password: Joi.string().required().min(8),
+      password: Joi.string().required(),
     }),
   }),
   login

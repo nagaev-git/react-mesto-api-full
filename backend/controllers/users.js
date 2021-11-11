@@ -173,9 +173,7 @@ module.exports.login = (req, res, next) => {
           const token = jwt.sign(
             { _id: user._id },
             NODE_ENV === "production" ? JWT_SECRET : "dev-secret",
-            {
-              expiresIn: "7d",
-            }
+            { expiresIn: "7d" }
           );
           res.status(201).send({ token });
         }
@@ -183,7 +181,7 @@ module.exports.login = (req, res, next) => {
     })
     .catch((err) => {
       if (err.message === "IncorrectEmail") {
-        next(new UnauthorizedError("Указан некорректный Email или пароль."));
+        next(new BadRequestError("Указан некорректный Email или пароль."));
       } else {
         next(err);
       }

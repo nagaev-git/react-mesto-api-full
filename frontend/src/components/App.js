@@ -189,8 +189,8 @@ export default function App() {
       auth
         .checkToken(jwt)
         .then((res) => {
-          if (res.email) {
-            setEmail(res.email);
+          if (res.data.email) {
+            setEmail(res.data.email);
             setLoggedIn(true);
             history.push("/");
           }
@@ -204,9 +204,9 @@ export default function App() {
   const handleLogin = (password, email) => {
     auth
       .authorize(password, email)
-      .then((res) => {
-        if (res.token) {
-          localStorage.setItem("jwt", res.token);
+      .then((data) => {
+        if (data.token) {
+          localStorage.setItem("jwt", data.token);
           setLoggedIn(true);
           setEmail(email);
           history.push("/");
@@ -218,8 +218,8 @@ export default function App() {
   const handleRegister = (password, email) => {
     auth
       .register(password, email)
-      .then((res) => {
-        if (res.email) {
+      .then((data) => {
+        if (data.data.email) {
           setIsSuccessRegister(true);
           setIsRegisterPopupOpen(true);
         }
