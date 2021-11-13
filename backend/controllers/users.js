@@ -28,8 +28,8 @@ module.exports.getUserByID = (req, res, next) => {
       } else if (err.message === "IncorrectID") {
         next(
           new NotFoundError(
-            `Карточка с указанным _id: ${req.params.userId} не найдена.`
-          )
+            `Карточка с указанным _id: ${req.params.userId} не найдена.`,
+          ),
         );
       } else {
         next(err);
@@ -52,7 +52,9 @@ module.exports.getMyInfo = (req, res, next) => {
 };
 
 module.exports.createUser = (req, res, next) => {
-  const { name, about, avatar, email, password } = req.body;
+  const {
+    name, about, avatar, email, password,
+  } = req.body;
   User.findOne({ email })
     .then((usr) => {
       if (usr) {
@@ -60,15 +62,13 @@ module.exports.createUser = (req, res, next) => {
       }
       bcrypt
         .hash(password, 10)
-        .then((hash) =>
-          User.create({
-            name,
-            about,
-            avatar,
-            email,
-            password: hash,
-          })
-        )
+        .then((hash) => User.create({
+          name,
+          about,
+          avatar,
+          email,
+          password: hash,
+        }))
         .then((user) => {
           const userDoc = user._doc;
           delete userDoc.password;
@@ -80,8 +80,8 @@ module.exports.createUser = (req, res, next) => {
               new BadRequestError(
                 `${Object.values(err.errors)
                   .map((error) => error.message)
-                  .join(" ")}`
-              )
+                  .join(" ")}`,
+              ),
             );
           } else {
             next(err);
@@ -100,7 +100,7 @@ module.exports.updateProfile = (req, res, next) => {
       new: true,
       runValidators: true,
       upsert: false,
-    }
+    },
   )
     .orFail(new Error("IncorrectID"))
     .then((user) => {
@@ -114,8 +114,8 @@ module.exports.updateProfile = (req, res, next) => {
           new BadRequestError(
             `${Object.values(err.errors)
               .map((error) => error.message)
-              .join(" ")}`
-          )
+              .join(" ")}`,
+          ),
         );
       } else {
         next(err);
@@ -135,7 +135,7 @@ module.exports.updateAvatar = (req, res, next) => {
         new: true,
         runValidators: true,
         upsert: false,
-      }
+      },
     )
       .orFail(new Error("IncorrectID"))
       .then((user) => {
@@ -149,8 +149,8 @@ module.exports.updateAvatar = (req, res, next) => {
             new BadRequestError(
               `${Object.values(err.errors)
                 .map((error) => error.message)
-                .join(" ")}`
-            )
+                .join(" ")}`,
+            ),
           );
         } else {
           next(err);
@@ -172,8 +172,8 @@ module.exports.login = (req, res, next) => {
         } else {
           const token = jwt.sign(
             { _id: user._id },
-            NODE_ENV === "production" ? JWT_SECRET : "dev-secret",
-            { expiresIn: "7d" }
+            NODE_ENV === "production" ? JWT_SECRET : "strongest-key-ever",
+            { expiresIn: "7d" },
           );
           res.status(201).send({ token });
         }
@@ -181,7 +181,7 @@ module.exports.login = (req, res, next) => {
     })
     .catch((err) => {
       if (err.message === "IncorrectEmail") {
-        next(new BadRequestError("Указан некорректный Email или пароль."));
+        next(new UnauthorizedError("Указан некорректный Email или пароль."));
       } else {
         next(err);
       }

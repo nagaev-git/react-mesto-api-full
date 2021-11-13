@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "npx eslint .",
+    "lint": "eslint --fix --ext .js,.jsx .",
     "start": "node app.js",
     "dev": "nodemon app.js"
   },
@@ -22,7 +22,6 @@
   "devDependencies": {
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-airbnb-base": "0.0.1-security",
     "eslint-plugin-import": "^2.22.1",
     "nodemon": "^2.0.13"
   },
@@ -30,7 +29,6 @@
     "bcryptjs": "^2.4.3",
     "celebrate": "^15.0.0",
     "dotenv": "^10.0.0",
-    "editorconfig": "^0.15.3",
     "express": "^4.17.1",
     "express-winston": "^4.2.0",
     "helmet": "^4.6.0",

@@ -45,7 +45,7 @@ app.post(
       password: Joi.string().required().min(8).max(35),
     }),
   }),
-  createUser
+  createUser,
 );
 
 app.post(
@@ -56,7 +56,7 @@ app.post(
       password: Joi.string().required(),
     }),
   }),
-  login
+  login,
 );
 
 app.use(auth);
