@@ -74,31 +74,25 @@ class Api {
     }).then(this._handleResponse);
   }
 
-  addLike(cardID) {
-    return fetch(`${this._url}/cards/${cardID}/likes`, {
-      method: 'PUT',
+  changeLikeCardStatus(cardId, isLiked) {
+    const addLike = {
       headers: {
-        authorization: `Bearer ${localStorage.getItem('jwt')}`,
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(this._checkResponse);
-  }
-
-  removeLike(cardID) {
-    return fetch(`${this._url}/cards/${cardID}/likes`, {
-      method: 'DELETE',
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        "Content-Type": "application/json",
+      },
+      method: "PUT",
+    };
+    const removeLike = {
       headers: {
-        authorization: `Bearer ${localStorage.getItem('jwt')}`,
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(this._checkResponse);
-  }
-
-  changeLikeCardStatus(cardID, isLiked) {
-    //Либо ставим лайк, либо снимаем его
-    return isLiked ? this.addLike(cardID) : this.removeLike(cardID) ;
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        "Content-Type": "application/json",
+      },
+      method: "DELETE",
+    };
+    return fetch(
+      `${this._url}/cards/${cardId}/likes`,
+      isLiked ? removeLike : addLike
+    ).then(this._handleResponse);
   }
 }
 
